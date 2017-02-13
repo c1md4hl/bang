@@ -4,7 +4,6 @@ let ground, players, player_1, player_2, balls, ball, ball_state, ball_text, p1_
 let p1_bar_removed = false,
     p2_bar_removed = false;
 
-
 let speed_multiplicator = 30;
 let ballSpeed = 300;
 
@@ -19,18 +18,20 @@ function preload() {
    game.load.image('p2', 'assets/img/p2.png', 30, 30);
    game.load.image('ball', 'assets/img/ball.png', 30, 30);
    game.load.image('bar', 'assets/img/bar.png', 20, 480);
-
    game.load.image('star', 'assets/img/star.png', 64, 64);
-
+   
+   // add spritesheet for animating stars
    //game.load.spritesheet('stars', 'assets/img/.png', 64, 64);
 }
 
 function create() { 
    game.world.setBounds(0, 0, game.world.width, game.world.height);
 
+   // open bounds on both sides
    game.physics.arcade.checkCollision.left  = false;
    game.physics.arcade.checkCollision.right = false;
 
+   // add ball
    balls = game.add.group();
    balls.enableBody = true;
    balls.physicsBodyType = Phaser.Physics.ARCADE;
@@ -41,12 +42,13 @@ function create() {
    ball.body.bounce.set(1, 1);
    ball.anchor.set(0.5, 0.5);
    ball.enableBody = true;
-   ball.physicsBodyType = Phaser.Physics.ARCADE;
+   //ball.physicsBodyType = Phaser.Physics.ARCADE;
 
    let style = { font: "18px Arial", fill: "#ff0000" };
    ball_text = game.add.text(0, 0, "0", style);
    ball_text.anchor.set(0.5);
 
+   // add players
    players = game.add.group();
    players.enableBody = true;
    players.physicsBodyType = Phaser.Physics.ARCADE;
@@ -55,15 +57,16 @@ function create() {
    player_1.body.collideWorldBounds = true;
    player_1.body.immovable = true;
    player_1.body.bounce.set(1, 1);
+   player_1.anchor.set(0.5, 0.5);
    
    player_2 = players.create(game.world.width - 15 - STAR_WIDTH - BAR_WIDTH, game.world.height / 2, 'p2');
    player_2.body.collideWorldBounds = true;
    player_2.body.immovable = true;
    player_2.body.bounce.set(1, 1);
-
-   player_1.anchor.set(0.5, 0.5);
    player_2.anchor.set(0.5, 0.5);
 
+
+   // add sidebars
    sidebars = game.add.group();
    sidebars.enableBody = true;
    sidebars.physicsBodyType = Phaser.Physics.ARCADE;
@@ -78,7 +81,8 @@ function create() {
    p2_bar.enableBody = true;
    p2_bar.physicsBodyType = Phaser.Physics.ARCADE;
    
-   
+     
+   // add stars
    p1_stars = game.add.group();
    p1_stars.enableBody = true;
   
@@ -93,10 +97,10 @@ function create() {
       game_world_seventh += game_world_seventh_inc;
    }
 
+   // controls
    controls = { p1:{up:"",down:"",left:"",right:""},
                 p2:{up:"",down:"",left:"",right:""}
               };
-   // controls
    controls.p1.up    = game.input.keyboard.addKey(Phaser.Keyboard.W);
    controls.p1.down  = game.input.keyboard.addKey(Phaser.Keyboard.S);
    controls.p1.left  = game.input.keyboard.addKey(Phaser.Keyboard.A);
@@ -154,9 +158,7 @@ function update() {
      }
    }
 
-
    processCollisions();
-
 
    ball_text.x = Math.floor(ball.x);
    ball_text.y = Math.floor(ball.y);
@@ -189,7 +191,6 @@ function processCollisions() {
 
    game.physics.arcade.overlap(balls, p1_stars, overlapP1Stars);
    game.physics.arcade.overlap(balls, p2_stars, overlapP2Stars);
-
 }
 
 function collidePlayer(_ball, _player) {

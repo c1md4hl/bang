@@ -140,16 +140,14 @@ var playState = {
        if(p1_bar_removed) {
           if(ball.x > game.world.width) {
             p1_points++;
-            console.log('P1: '+p1_points+' - P2: '+p2_points);
-            game.state.start('play');
+            this.checkScore('p1');
           }
        }
 
        if(p2_bar_removed) {
           if(ball.x < 0) {
             p2_points++;
-            console.log('P1: '+p1_points+' - P2: '+p2_points);
-            game.state.start('play');
+            this.checkScore('p2');
           }
        }
 
@@ -201,6 +199,20 @@ var playState = {
              p2_bar_removed = true;
           }
        }
-    }
+    },
+
+   checkScore: function(_player) {
+      console.log('P1: '+p1_points+' - P2: '+p2_points);
+      if(_player === 'p1') {
+         if(p1_points >= WIN_POINTS && p1_points > (p2_points + 1)) {
+            game.state.start('win');
+         }
+      } else {
+         if(p2_points >= WIN_POINTS && p2_points > (p1_points + 1)) {
+            game.state.start('win');
+         }
+      } 
+      game.state.start('play');      
+   }
 
 }

@@ -12,10 +12,11 @@ let center_padding = 10;
 const PLAYER_WIDTH = 30;
 const STAR_WIDTH   = 64;
 const BAR_WIDTH    = 20;
+const WIN_POINTS   = 3;
 
 //game.state.add('boot', bootState);
 game.state.add('load', loadState);
-//game.state.add('menu', menuState);
 game.state.add('play', playState);
+game.state.add('win', winState);
 
 game.state.start('load');

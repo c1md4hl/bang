@@ -203,16 +203,12 @@ var playState = {
 
    checkScore: function(_player) {
       console.log('P1: '+p1_points+' - P2: '+p2_points);
-      if(_player === 'p1') {
-         if(p1_points >= WIN_POINTS && p1_points > (p2_points + 1)) {
-            game.state.start('win');
-         }
+      if( (_player === 'p1' && p1_points >= WIN_POINTS && p1_points > (p2_points + 1)) || 
+          (p2_points >= WIN_POINTS && p2_points > (p1_points + 1)) ) {
+             game.state.start('win');         
       } else {
-         if(p2_points >= WIN_POINTS && p2_points > (p1_points + 1)) {
-            game.state.start('win');
-         }
-      } 
-      game.state.start('play');      
+         game.state.start('play');      
+      }
    }
 
 }
